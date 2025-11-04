@@ -5,55 +5,69 @@ import cloudinary from "../config/cloudinary.js";
 
 const route = express.Router();
 
-// Reusable upload function
 const uploadToCloudinary = (fileBuffer) => {
   return new Promise((resolve, reject) => {
+    if (!fileBuffer) return reject(new Error("No file buffer received"));
+
     const stream = cloudinary.uploader.upload_stream(
       { folder: "posts" },
       (error, result) => {
-        if (error) reject(error);
-        else resolve(result);
+        if (error) return reject(error);
+        resolve(result);
       }
     );
+
     stream.end(fileBuffer);
   });
 };
 
+// ✏️ UPDATE POST
+
 route.post("/createPost", upload.single("image"), async (req, res) => {
   try {
-    const { title, location, price, beds, baths, area, description, badge , type } =
+    const { title, price, beds, baths, area, description, type, location } =
       req.body;
 
+    // 🔹 Convert numeric fields to Number safely
+    const convertedData = {
+      title,
+      price: Number(price),
+      beds: Number(beds),
+      baths: Number(baths),
+      area: Number(area),
+      location,
+      description,
+      type,
+    };
+
+    // 🔹 Upload image if file is provided
     let imageUrl = null;
     if (req.file) {
       const uploadResult = await uploadToCloudinary(req.file.buffer);
       imageUrl = uploadResult.secure_url;
     }
 
+    // 🔹 Create and save new post
     const newPost = new Post({
-      title,
-      location,
-      price,
-      beds,
-      baths,
-      type,
-      area,
-      description,
-      badge,
+      ...convertedData,
       image: imageUrl,
     });
 
     await newPost.save();
-    res
-      .status(201)
-      .json({ message: "Post created successfully!", post: newPost });
+
+    res.status(201).json({
+      message: "Post created successfully!",
+      post: newPost,
+      success: true,
+    });
   } catch (err) {
     console.error("Error creating post:", err);
-    res.status(500).json({ message: "Error while creating post!" });
+    res.status(500).json({
+      message: "Error while creating post!",
+    });
   }
 });
 
-// ✏️ UPDATE POST
 route.put("/updatePost/:id", upload.single("image"), async (req, res) => {
   try {
     const { id } = req.params;
