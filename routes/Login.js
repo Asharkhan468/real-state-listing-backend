@@ -34,8 +34,8 @@ route.post("/login", async (req, res) => {
     // });
     res.cookie("token", token, {
       httpOnly: true,
-      secure: true, // ok for localhost
-      sameSite: "lax", // change from 'none' to 'lax'
+      secure: true, 
+      sameSite: "lax", 
       path: "/",
       maxAge: 24 * 60 * 60 * 1000,
     });
