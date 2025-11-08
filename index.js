@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import createPost from "./routes/CreatePost.js";
 import allPost from './routes/GetPosts.js';
+import verifyToken from './routes/Verify.js';
 
 dotenv.config();
 const app = express();
@@ -22,8 +23,11 @@ app.use(
   // })
 
   cors({
-    origin: "https://real-state-listings-beta.vercel.app", // your frontend domain
-    credentials: true, // allow cookies to be sent
+    origin: ["http://localhost:300",
+      "https://real-state-listings-beta.vercel.app", 
+    ],
+      
+    credentials: true,
   })
 );
 
@@ -36,6 +40,7 @@ mongoose
 app.use("/api/auth", login);
 app.use("/api/v1", createPost);
 app.use("/api/v1" , allPost);
+app.use("/api/v1" , verifyToken);
 
 
 app.listen(5000, () => {
