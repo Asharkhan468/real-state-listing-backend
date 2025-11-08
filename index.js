@@ -32,6 +32,7 @@ app.use("/api/auth", login);
 app.use("/api/v1", createPost);
 app.use("/api/v1" , allPost);
 
+
 app.listen(5000, () => {
   console.log("Server running on port 5000");
 });
