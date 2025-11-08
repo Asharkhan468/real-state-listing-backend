@@ -12,13 +12,18 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(
+  // cors({
+  //   origin: [
+  //     "http://localhost:3000",
+  //     "https://real-state-listings-beta.vercel.app",
+  //   ],
+  //   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  //   credentials: true,
+  // })
+
   cors({
-    origin: [
-      "http://localhost:3000",
-      "https://real-state-listings-beta.vercel.app",
-    ],
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    credentials: true,
+    origin: "https://real-state-listings-beta.vercel.app", // your frontend domain
+    credentials: true, // allow cookies to be sent
   })
 );
 
