@@ -13,17 +13,11 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(
-  // cors({
-  //   origin: [
-  //     "http://localhost:3000",
-  //     "https://real-state-listings-beta.vercel.app",
-  //   ],
-
-  //   credentials: true,
-  // })
-
   cors({
-    origin: ["http://localhost:3000", "https://real-state-listings-beta.vercel.app"],
+    origin: [
+      "http://localhost:3000",
+      "https://real-state-listings-beta.vercel.app",
+    ],
     credentials: true,
   })
 );
