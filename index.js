@@ -6,7 +6,6 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import createPost from "./routes/CreatePost.js";
 import allPost from "./routes/GetPosts.js";
-import verifyToken from "./routes/verify.js";
 
 dotenv.config();
 const app = express();
@@ -31,7 +30,6 @@ mongoose
 app.use("/api/auth", login);
 app.use("/api/v1", createPost);
 app.use("/api/v1", allPost);
-app.use("/api/v1", verifyToken);
 
 app.listen(5000, () => {
   console.log("Server running on port 5000");
