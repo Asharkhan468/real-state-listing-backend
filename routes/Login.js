@@ -25,22 +25,14 @@ route.post("/login", async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    // res.cookie("token", token, {
-    //   httpOnly: false,
-    //   secure: false,
-    //   sameSite: "none",
-    //   path: "/",
-    //   maxAge: 24 * 60 * 60 * 1000,
-    // });
-
-
     res.cookie("token", token, {
-  httpOnly: true, // frontend JS se access nahi karna → middleware me access ok
-  secure: false, // HTTPS nahi, local me false
-  sameSite: "lax", // "lax" local dev ke liye safe
-  path: "/",
-  maxAge: 24 * 60 * 60 * 1000,
-});
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      path: "/",
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+
 
     return res.status(200).json({
       message: "Login successful!",
