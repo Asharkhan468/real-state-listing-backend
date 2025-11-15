@@ -15,7 +15,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:3000",
-      "https://real-state-listings-4je44p7vq-asharkhan468s-projects.vercel.app/",
+      "https://real-state-listings-delta.vercel.app",
     ],
     credentials: true,
   })
