@@ -30,6 +30,7 @@ route.post("/login", async (req, res) => {
       secure: true,
       sameSite: 'none',
       path: '/',
+      domain:"real-state-listings-delta.vercel.app",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
