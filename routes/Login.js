@@ -22,7 +22,7 @@ route.post("/login", async (req, res) => {
     const token = jwt.sign(
       { email: adminEmail, role: "admin" },
       process.env.JWT_SECRET,
-      { expiresIn: "1h" }
+      { expiresIn: "2m" }
     );
 
     const isProduction = process.env.NODE_ENV === "production";
@@ -32,7 +32,7 @@ route.post("/login", async (req, res) => {
       secure: isProduction,
       sameSite: isProduction ? "none" : "lax",
       path: "/",
-      maxAge: 7 * 24 * 60 * 60 * 1000,
+      maxAge:  2 * 60 * 1000,
       ...(isProduction && { domain: ".vercel.app" }),
     });
 
