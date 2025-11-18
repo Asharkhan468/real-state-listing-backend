@@ -27,7 +27,7 @@ route.post("/login", async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: false,
-      secure: true,
+      secure: false,
       sameSite: 'none',
       path: '/',
       domain:"real-state-listings-delta.vercel.app",
