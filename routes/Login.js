@@ -28,8 +28,8 @@ route.post("/login", async (req, res) => {
     res.cookie("token", token, {
       httpOnly: false,
       secure: true,
-      sameSite: "none",
-      path: "/",
+      sameSite: 'none',
+      path: '/',
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
