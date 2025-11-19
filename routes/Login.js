@@ -128,10 +128,9 @@ route.post("/logout", (req, res) => {
   
   res.clearCookie("token", {
     httpOnly: true,
-    secure: isProduction,
-    sameSite: isProduction ? "none" : "lax",
+    secure: true,
+    sameSite: 'none',
     path: "/",
-    domain: isProduction ? ".yourdomain.com" : "localhost"
   });
   
   res.json({ message: "Logout successful!" });
