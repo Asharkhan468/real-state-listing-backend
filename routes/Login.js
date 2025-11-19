@@ -95,7 +95,7 @@ route.post("/login", async (req, res) => {
     const token = jwt.sign(
       { email: adminEmail, role: "admin" },
       process.env.JWT_SECRET,
-      { expiresIn: "2m" }
+      { expiresIn: "15m" }
     );
 
     // Cookie settings - Development vs Production
@@ -103,8 +103,8 @@ route.post("/login", async (req, res) => {
     
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false,
-      sameSite: isProduction ? "none" : "lax",
+      secure: true,
+      sameSite: 'none',
       path: "/",
       maxAge: 2 * 60 * 1000,
     });
