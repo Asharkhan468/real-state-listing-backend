@@ -35,15 +35,13 @@ route.post("/login", async (req, res) => {
     //   maxAge:  2 * 60 * 1000,
     // });
 
-
     res.cookie("token", token, {
-  httpOnly: true,
-  secure: true,             // Always true in production hosting
-  sameSite: "none",         // Cross-site cookie must be NONE
-  path: "/",
-  maxAge: 2 * 60 * 1000,    // 2 minutes
-});
-
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      path: "/",
+      maxAge: 2 * 60 * 1000,
+    });
 
     return res.status(200).json({
       message: "Login successful!",
