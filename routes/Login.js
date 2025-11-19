@@ -59,7 +59,17 @@
 
 // export default route;
 
+
+
+
+
+
+
+
+
+
 //debugging
+
 
 // routes/Login.js
 import express from "express";
@@ -78,9 +88,7 @@ route.post("/login", async (req, res) => {
     const adminPassword = process.env.ADMIN_PASSWORD;
 
     if (email !== adminEmail || password !== adminPassword) {
-      return res
-        .status(401)
-        .json({ message: "You are not an authorized user!" });
+      return res.status(401).json({ message: "You are not an authorized user!" });
     }
 
     // Generate token for admin
@@ -90,13 +98,16 @@ route.post("/login", async (req, res) => {
       { expiresIn: "15m" }
     );
 
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
-      path: "/",
-      maxAge: 10 * 60 * 1000,
-    });
+  const isProduction = process.env.NODE_ENV === "production";
+
+res.cookie("token", token, {
+  httpOnly: true,
+  secure: isProduction,        // only true in production (HTTPS)
+  sameSite: isProduction ? "none" : "lax",
+  path: "/",
+  maxAge: 15 * 60 * 1000       // match token expiry
+});
+
 
     return res.status(200).json({
       message: "Login successful!",
@@ -114,16 +125,17 @@ route.post("/login", async (req, res) => {
 // LOGOUT ROUTE
 route.post("/logout", (req, res) => {
   const isProduction = process.env.NODE_ENV === "production";
-
-  res.cookie("token", token, {
+  
+  res.clearCookie("token", {
     httpOnly: true,
-    secure: isProduction, // only true in production (HTTPS)
-    sameSite: isProduction ? "none" : "lax",
+    secure: true,
+    sameSite: 'none',
     path: "/",
-    maxAge: 15 * 60 * 1000, // match token expiry
   });
-
+  
   res.json({ message: "Logout successful!" });
 });
+
+
 
 export default route;
