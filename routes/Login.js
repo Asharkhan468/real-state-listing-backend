@@ -103,7 +103,7 @@ route.post("/login", async (req, res) => {
     
     res.cookie("token", token, {
       httpOnly: true,
-      secure: isProduction,
+      secure: false,
       sameSite: isProduction ? "none" : "lax",
       path: "/",
       maxAge: 2 * 60 * 1000,
