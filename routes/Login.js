@@ -33,7 +33,6 @@ route.post("/login", async (req, res) => {
       sameSite: isProduction ? "none" : "lax",
       path: "/",
       maxAge:  2 * 60 * 1000,
-      ...(isProduction && { domain: ".vercel.app" }),
     });
 
     return res.status(200).json({
