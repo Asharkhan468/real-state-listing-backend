@@ -102,15 +102,18 @@ route.post("/login", async (req, res) => {
 
 res.cookie("token", token, {
   httpOnly: true,
-  secure: isProduction,        // only true in production (HTTPS)
+  secure: isProduction,       
   sameSite: isProduction ? "none" : "lax",
   path: "/",
-  maxAge: 15 * 60 * 1000       // match token expiry
+  maxAge: 15 * 60 * 1000       
 });
+
+
 
 
     return res.status(200).json({
       message: "Login successful!",
+      token,
       user: {
         email: adminEmail,
         role: "admin",
