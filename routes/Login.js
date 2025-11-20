@@ -13,10 +13,14 @@ route.post("/login", async (req, res) => {
     const adminEmail = process.env.ADMIN_EMAIL;
     const adminPassword = process.env.ADMIN_PASSWORD;
 
-    if (email !== adminEmail || password !== adminPassword) {
+    if (email !== adminEmail) {
       return res
         .status(401)
         .json({ message: "You are not an authorized user!" });
+    }else if( password !== adminPassword){
+       return res
+        .status(401)
+        .json({ message: "Incorrect Password" });
     }
 
     // Generate token for admin
