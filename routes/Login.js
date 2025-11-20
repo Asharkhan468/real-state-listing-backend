@@ -23,7 +23,7 @@ route.post("/login", async (req, res) => {
     const token = jwt.sign(
       { email: adminEmail, role: "admin" },
       process.env.JWT_SECRET,
-      { expiresIn: "15m" }
+      { expiresIn: "30m" }
     );
 
     const isProduction = process.env.NODE_ENV === "production";
